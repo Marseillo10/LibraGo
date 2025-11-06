@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
-import { Search, X, Star, BookOpen, TrendingUp, ArrowLeft } from "lucide-react";
+import { Search, X, Star, BookOpen, TrendingUp, ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "../../firebase";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { Checkbox } from "../ui/checkbox";
+import { Slider } from "../ui/slider";
 
 interface SearchScreenProps {
   onSelectBook: (bookId: string) => void;
@@ -67,6 +70,31 @@ export function SearchScreen({ onSelectBook, onBack }: SearchScreenProps) {
   const hasActiveFilters = authorSearchQuery !== "" || selectedGenres.length > 0 || 
                           selectedSubjects.length > 0 || selectedLanguages.length > 0 || 
                           pageRange[0] > 0 || pageRange[1] < 10000 || minRating > 0 || freeOnly;
+
+  const filteredResults = searchResults.filter(book => {
+    if (authorSearchQuery && !book.volumeInfo.authors?.join(", ").toLowerCase().includes(authorSearchQuery.toLowerCase())) {
+      return false;
+    }
+    if (selectedGenres.length > 0 && !selectedGenres.some(genre => book.volumeInfo.categories?.includes(genre))) {
+      return false;
+    }
+    if (selectedSubjects.length > 0 && !selectedSubjects.some(subject => book.volumeInfo.description?.toLowerCase().includes(subject.toLowerCase()))) {
+      return false;
+    }
+    if (selectedLanguages.length > 0 && !selectedLanguages.some(lang => book.volumeInfo.language?.toLowerCase().includes(lang.toLowerCase()))) {
+      return false;
+    }
+    if (book.volumeInfo.pageCount < pageRange[0] || book.volumeInfo.pageCount > pageRange[1]) {
+      return false;
+    }
+    if (book.volumeInfo.averageRating < minRating) {
+      return false;
+    }
+    if (freeOnly && book.saleInfo?.isEbook) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 pb-20 lg:pb-8">

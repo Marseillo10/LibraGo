@@ -1,15 +1,19 @@
+
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Check } from "lucide-react";
+import { toast } from "sonner";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
-interface GenreSelectionScreenProps {
-  onComplete: (selectedGenres: string[]) => void;
-}
-
-export function GenreSelectionScreen({ onComplete }: GenreSelectionScreenProps) {
+export function GenreSelectionScreen() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const genres = [
     { id: "programming", name: "Programming", emoji: "💻", color: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300" },
@@ -27,15 +31,23 @@ export function GenreSelectionScreen({ onComplete }: GenreSelectionScreenProps) 
   ];
 
   const toggleGenre = (genreId: string) => {
-    setSelectedGenres(prev =>
-      prev.includes(genreId)
+    setSelectedGenres(prev => {
+      const newSelectedGenres = prev.includes(genreId)
         ? prev.filter(id => id !== genreId)
-        : [...prev, genreId]
-    );
+        : [...prev, genreId];
+      if (newSelectedGenres.length > 3) {
+        toast.info("Anda dapat memilih lebih dari 3 genre, tetapi 3 adalah yang paling optimal untuk rekomendasi.");
+      }
+      return newSelectedGenres;
+    });
   };
 
-  const handleContinue = () => {
-    onComplete(selectedGenres);
+  const handleContinue = async () => {
+    if (currentUser) {
+      const userDocRef = doc(db, "users", currentUser.uid);
+      await updateDoc(userDocRef, { hasCompletedOnboarding: true });
+    }
+    navigate("/home");
   };
 
   return (
@@ -90,14 +102,13 @@ export function GenreSelectionScreen({ onComplete }: GenreSelectionScreenProps) 
         <div className="flex gap-3 max-w-md mx-auto">
           <Button
             variant="outline"
-            onClick={() => onComplete([])}
+            onClick={() => navigate("/home")}
             className="flex-1"
           >
             Lewati
           </Button>
           <Button
             onClick={handleContinue}
-            disabled={selectedGenres.length < 3}
             className="flex-1"
           >
             Lanjutkan ({selectedGenres.length}/3+)
@@ -107,3 +118,4 @@ export function GenreSelectionScreen({ onComplete }: GenreSelectionScreenProps) 
     </div>
   );
 }
+

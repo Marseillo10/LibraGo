@@ -4,14 +4,11 @@ interface EnhancedSearchScreenProps {
   onSelectBook: (bookId: string) => void;
 }
 
-export const EnhancedSearchScreen: React.FC<EnhancedSearchScreenProps> = ({ onSelectBook }) => {
+export function EnhancedSearchScreen({ onSelectBook }: { onSelectBook: (bookId: string) => void; }) {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Enhanced Search</h1>
-      <p>This is the enhanced search screen with advanced filtering and sorting options.</p>
-      <button onClick={() => onSelectBook('some-book-id')} className="mt-4 p-2 bg-blue-500 text-white rounded">
-        Select a Book (Placeholder)
-      </button>
+      <h1 className="text-2xl font-bold">Enhanced Search</h1>
+      <p>This is a placeholder for the enhanced search screen.</p>
     </div>
   );
-};
+}

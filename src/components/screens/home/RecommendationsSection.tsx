@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ChevronRight, Star } from "lucide-react";
 import { Card } from "../../ui/card";
@@ -5,6 +6,7 @@ import { Button } from "../../ui/button";
 import { ImageWithFallback } from "../../figma/ImageWithFallback";
 import { SwipeableBookCard } from "../../SwipeableBookCard";
 import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom';
 
 interface Recommendation {
   id: string;
@@ -16,13 +18,17 @@ interface Recommendation {
 
 interface RecommendationsSectionProps {
   recommendations: Recommendation[];
-  onSelectBook: (bookId: string) => void;
 }
 
 export function RecommendationsSection({
   recommendations,
-  onSelectBook,
 }: RecommendationsSectionProps) {
+  const navigate = useNavigate();
+
+  const handleSelectBook = (bookId: string) => {
+    navigate(`/book/${bookId}`);
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 px-6 py-8 lg:px-12">
       <div className="max-w-6xl mx-auto">
@@ -76,10 +82,10 @@ export function RecommendationsSection({
                     bookId={book.id}
                     cover={bookCover}
                     content={bookContent}
-                    onBookClick={() => onSelectBook(book.id)}
+                    onBookClick={() => handleSelectBook(book.id)}
                     onBookmark={() => toast.success(`${book.title} ditambahkan ke bookmark`)}
                     onDownload={() => toast.success(`Mengunduh ${book.title}...`)}
-                    onInfo={() => onSelectBook(book.id)}
+                    onInfo={() => handleSelectBook(book.id)}
                     onAddToCollection={() => toast.success(`${book.title} ditambahkan ke koleksi`)}
                   />
                 </div>
@@ -87,7 +93,7 @@ export function RecommendationsSection({
                 {/* Desktop without swipe */}
                 <Card
                   className="hidden lg:block overflow-hidden cursor-pointer hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                  onClick={() => onSelectBook(book.id)}
+                  onClick={() => handleSelectBook(book.id)}
                 >
                   {bookCover}
                   {bookContent}
@@ -100,3 +106,4 @@ export function RecommendationsSection({
     </div>
   );
 }
+

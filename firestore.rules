@@ -2,21 +2,27 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Users can only read and write to their own user document
+    // Users can read/write their own doc, developers can read any user doc
     match /users/{userId} {
-      allow read, update: if request.auth.uid == userId;
+      allow read: if request.auth.uid == userId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'developer';
+      allow update: if request.auth.uid == userId;
       allow create: if request.auth.uid != null;
+
+      // Collection sub-collection rules
+      match /collections/{collectionId} {
+        allow read, write: if request.auth.uid == userId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'developer';
+      }
+
+      // History sub-collection rules
+      match /history/{document=**} {
+        allow read: if request.auth.uid == userId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'developer';
+      }
     }
 
     // Books are readable by everyone, but only writable by admins
     match /books/{bookId} {
       allow read: if true;
       allow write: if request.auth.token.isAdmin == true;
-    }
-
-    // Users can manage their own collections
-    match /collections/{collectionId} {
-      allow read, write: if request.auth.uid == resource.data.ownerId;
     }
 
     // Users can manage their own reading state

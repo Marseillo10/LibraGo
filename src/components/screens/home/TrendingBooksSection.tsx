@@ -1,3 +1,4 @@
+
 import { ChevronRight, Flame, Info, Star, TrendingUp } from "lucide-react";
 import { Card } from "../../ui/card";
 import { Button } from "../../ui/button";
@@ -6,6 +7,7 @@ import { ImageWithFallback } from "../../figma/ImageWithFallback";
 import { SwipeableBookCard } from "../../SwipeableBookCard";
 import { toast } from "sonner";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface TrendingBook {
   id: string;
@@ -19,17 +21,21 @@ interface TrendingBook {
 
 interface TrendingBooksSectionProps {
   trendingBooks: TrendingBook[];
-  onSelectBook: (bookId: string) => void;
   showSwipeHint: boolean;
   setShowSwipeHint: (show: boolean) => void;
 }
 
 export function TrendingBooksSection({
   trendingBooks,
-  onSelectBook,
   showSwipeHint,
   setShowSwipeHint,
 }: TrendingBooksSectionProps) {
+  const navigate = useNavigate();
+
+  const handleSelectBook = (bookId: string) => {
+    navigate(`/book/${bookId}`);
+  };
+
   return (
     <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-900 dark:to-gray-800 px-6 py-8 lg:px-12">
       <div className="max-w-6xl mx-auto">
@@ -116,16 +122,16 @@ export function TrendingBooksSection({
                     bookId={book.id}
                     cover={bookCover}
                     content={bookContent}
-                    onBookClick={() => onSelectBook(book.id)}
+                    onBookClick={() => handleSelectBook(book.id)}
                     onBookmark={() => toast.success(`${book.title} ditambahkan ke bookmark`)}
                     onDownload={() => toast.success(`Mengunduh ${book.title}...`)}
-                    onInfo={() => onSelectBook(book.id)}
+                    onInfo={() => handleSelectBook(book.id)}
                     onAddToCollection={() => toast.success(`${book.title} ditambahkan ke koleksi`)}
                   />
                 </div>
                 <Card
                   className="hidden lg:block overflow-hidden cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                  onClick={() => onSelectBook(book.id)}
+                  onClick={() => handleSelectBook(book.id)}
                 >
                   {bookCover}
                   {bookContent}
@@ -138,3 +144,4 @@ export function TrendingBooksSection({
     </div>
   );
 }
+

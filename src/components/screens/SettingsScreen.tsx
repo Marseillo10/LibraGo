@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Settings, User, Bell, Lock, Palette, Globe, Moon, Sun, Monitor, Eye, Download, Shield, LogOut, Trash2, Save } from "lucide-react";
 import { Card } from "../ui/card";
@@ -11,12 +12,15 @@ import { Separator } from "../ui/separator";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Slider } from "../ui/slider";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "../ui/dialog";
 import { toast } from "sonner@2.0.3";
+import { useAuth } from "../../context/AuthContext";
 
 const SettingsScreen = () => {
+  const { currentUser, updatePassword, deleteAccount } = useAuth();
   // Account Settings
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("john.doe@example.com");
+  const [name, setName] = useState(currentUser?.displayName || "");
+  const [email, setEmail] = useState(currentUser?.email || "");
 
   // Notification Settings
   const [notifications, setNotifications] = useState({
@@ -52,6 +56,10 @@ const SettingsScreen = () => {
   const [autoDownload, setAutoDownload] = useState(false);
   const [downloadQuality, setDownloadQuality] = useState("high");
 
+  const [showSetPasswordDialog, setShowSetPasswordDialog] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
   const handleSaveProfile = () => {
     toast.success("Profil berhasil diperbarui");
   };
@@ -60,9 +68,32 @@ const SettingsScreen = () => {
     toast.success("Berhasil logout");
   };
 
-  const handleDeleteAccount = () => {
-    toast.success("Akun berhasil dihapus");
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount();
+      toast.success("Akun berhasil dihapus");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
+
+  const handleSetPassword = async () => {
+    if (newPassword !== confirmNewPassword) {
+      toast.error("Kata sandi tidak cocok!");
+      return;
+    }
+    try {
+      await updatePassword(newPassword);
+      toast.success("Kata sandi berhasil diatur!");
+      setShowSetPasswordDialog(false);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+
+
+  const hasPassword = currentUser?.providerData.some(p => p.providerId === 'password');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 md:p-8">
@@ -137,10 +168,17 @@ const SettingsScreen = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <Button variant="outline" className="w-full justify-start gap-2">
-                    <Lock className="w-4 h-4" />
-                    Ubah Password
-                  </Button>
+                  {hasPassword ? (
+                    <Button variant="outline" className="w-full justify-start gap-2">
+                      <Lock className="w-4 h-4" />
+                      Ubah Password
+                    </Button>
+                  ) : (
+                    <Button variant="outline" className="w-full justify-start gap-2" onClick={() => setShowSetPasswordDialog(true)}>
+                      <Lock className="w-4 h-4" />
+                      Atur Password
+                    </Button>
+                  )}
 
                   <Button variant="outline" className="w-full justify-start gap-2">
                     <Shield className="w-4 h-4" />
@@ -623,8 +661,33 @@ const SettingsScreen = () => {
           </TabsContent>
         </Tabs>
       </div>
+      <Dialog open={showSetPasswordDialog} onOpenChange={setShowSetPasswordDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Atur Password</DialogTitle>
+            <DialogDescription>
+              Buat password untuk login dengan email.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="new-password">Password Baru</Label>
+              <Input id="new-password" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirm-new-password">Konfirmasi Password Baru</Label>
+              <Input id="confirm-new-password" type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowSetPasswordDialog(false)}>Batal</Button>
+            <Button onClick={handleSetPassword}>Simpan</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
 
 export default SettingsScreen;
+

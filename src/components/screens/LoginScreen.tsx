@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Card } from "../ui/card";
@@ -9,23 +11,19 @@ import { Badge } from "../ui/badge";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "sonner";
 
-interface LoginScreenProps {
-  onLogin: () => void;
-  onNavigateToRegister: () => void;
-}
-
-export function LoginScreen({ onLogin, onNavigateToRegister }: LoginScreenProps) {
+export function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { login, signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
       toast.success("Login dengan Google berhasil!");
-      onLogin();
+      navigate("/");
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -38,7 +36,7 @@ export function LoginScreen({ onLogin, onNavigateToRegister }: LoginScreenProps)
     try {
       await login(email, password);
       toast.success("Login berhasil!");
-      onLogin();
+      navigate("/");
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -258,7 +256,7 @@ export function LoginScreen({ onLogin, onNavigateToRegister }: LoginScreenProps)
                 Belum punya akun?{" "}
                 <button
                   type="button"
-                  onClick={onNavigateToRegister}
+                  onClick={() => navigate("/register")}
                   className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
                 >
                   Daftar Gratis
@@ -310,3 +308,4 @@ export function LoginScreen({ onLogin, onNavigateToRegister }: LoginScreenProps)
     </div>
   );
 }
+

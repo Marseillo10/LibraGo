@@ -1,15 +1,14 @@
+
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { LibraGoLogo } from "../LibraGoLogo";
 import { BookOpen, Target, Users, Sparkles, ChevronRight } from "lucide-react";
 import { Progress } from "../ui/progress";
 
-interface WelcomeScreenProps {
-  onComplete: () => void;
-}
-
-export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
+export function WelcomeScreen() {
   const [currentStep, setCurrentStep] = useState(0);
+  const navigate = useNavigate();
 
   const steps = [
     {
@@ -46,12 +45,12 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      onComplete();
+      navigate("/genre-selection");
     }
   };
 
   const handleSkip = () => {
-    onComplete();
+    navigate("/genre-selection");
   };
 
   return (
@@ -124,3 +123,4 @@ export function WelcomeScreen({ onComplete }: WelcomeScreenProps) {
     </div>
   );
 }
+

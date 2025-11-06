@@ -117,6 +117,16 @@ export function SearchResultsSkeleton() {
   );
 }
 
+export function LoadingSkeleton() {
+  return (
+    <div className="space-y-8 p-6">
+      <StatsSkeleton />
+      <BookListSkeleton count={4} />
+      <BookListSkeleton count={4} />
+    </div>
+  );
+}
+
 // Shimmer Skeleton with animation
 export function ShimmerSkeleton({ className = "" }: { className?: string }) {
   return (

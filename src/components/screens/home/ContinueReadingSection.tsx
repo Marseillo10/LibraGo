@@ -1,8 +1,10 @@
+
 import { BookOpen } from "lucide-react";
 import { Card } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { Progress } from "../../ui/progress";
 import { ImageWithFallback } from "../../figma/ImageWithFallback";
+import { useNavigate } from "react-router-dom";
 
 interface ContinueReadingData {
   id: string;
@@ -16,13 +18,17 @@ interface ContinueReadingData {
 
 interface ContinueReadingSectionProps {
   continueReading: ContinueReadingData;
-  onSelectBook: (bookId: string) => void;
 }
 
 export function ContinueReadingSection({
   continueReading,
-  onSelectBook,
 }: ContinueReadingSectionProps) {
+  const navigate = useNavigate();
+
+  const handleSelectBook = (bookId: string) => {
+    navigate(`/book/${bookId}`);
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 px-6 py-8 lg:px-12">
       <div className="max-w-6xl mx-auto">
@@ -36,7 +42,7 @@ export function ContinueReadingSection({
               {/* Book Cover */}
               <div
                 className="w-24 h-32 rounded-lg overflow-hidden shrink-0 cursor-pointer"
-                onClick={() => onSelectBook(continueReading.id)}
+                onClick={() => handleSelectBook(continueReading.id)}
               >
                 <ImageWithFallback
                   src={continueReading.image}
@@ -51,7 +57,7 @@ export function ContinueReadingSection({
                   <div className="flex-1 min-w-0">
                     <h3
                       className="text-gray-900 dark:text-white mb-2 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-2"
-                      onClick={() => onSelectBook(continueReading.id)}
+                      onClick={() => handleSelectBook(continueReading.id)}
                     >
                       {continueReading.title}
                     </h3>
@@ -83,7 +89,7 @@ export function ContinueReadingSection({
 
                 {/* Continue Button */}
                 <Button
-                  onClick={() => onSelectBook(continueReading.id)}
+                  onClick={() => handleSelectBook(continueReading.id)}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   Lanjutkan
@@ -96,3 +102,4 @@ export function ContinueReadingSection({
     </div>
   );
 }
+

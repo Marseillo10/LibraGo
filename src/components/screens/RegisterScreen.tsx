@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Card } from "../ui/card";
@@ -10,12 +12,7 @@ import { Checkbox } from "../ui/checkbox";
 import { toast } from "sonner";
 import { useAuth } from "../../context/AuthContext";
 
-interface RegisterScreenProps {
-  onRegister: () => void;
-  onNavigateToLogin: () => void;
-}
-
-export function RegisterScreen({ onRegister, onNavigateToLogin }: RegisterScreenProps) {
+export function RegisterScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,12 +22,13 @@ export function RegisterScreen({ onRegister, onNavigateToLogin }: RegisterScreen
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { register, signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
       toast.success("Login dengan Google berhasil!");
-      onRegister();
+      navigate("/");
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -54,7 +52,7 @@ export function RegisterScreen({ onRegister, onNavigateToLogin }: RegisterScreen
     try {
       await register(name, email, password);
       toast.success("Akun berhasil dibuat!");
-      onRegister();
+      navigate("/");
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -134,13 +132,13 @@ export function RegisterScreen({ onRegister, onNavigateToLogin }: RegisterScreen
           {/* Testimonial */}
           <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-sm rounded-xl p-6 border border-purple-700/30">
             <p className="text-gray-300 italic mb-4">
-              "LibraGO mengubah cara saya membaca. Fitur-fiturnya luar biasa dan koleksinya sangat lengkap!"
+              "Mengembangkan LibraGO adalah sebuah perjalanan yang luar biasa. Kami mencurahkan semangat kami pada teknologi dan literasi untuk menciptakan aplikasi yang tidak hanya kaya fitur, tetapi juga intuitif dan mudah diakses oleh semua orang. Kami berharap LibraGO dapat menyalakan semangat membaca baru di Indonesia dan menjadi teman setia bagi setiap pembaca dalam pencarian ilmu."
             </p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500" />
               <div>
-                <p className="text-white text-sm">Sarah Wijaya</p>
-                <p className="text-gray-400 text-xs">Mahasiswa UI</p>
+                <p className="text-white text-sm">Kelompok LibraGO</p>
+                <p className="text-gray-400 text-xs">Mahasiswa UGM</p>
               </div>
             </div>
           </div>
@@ -313,7 +311,7 @@ export function RegisterScreen({ onRegister, onNavigateToLogin }: RegisterScreen
                 Sudah punya akun?{" "}
                 <button
                   type="button"
-                  onClick={onNavigateToLogin}
+                  onClick={() => navigate("/login")}
                   className="text-purple-400 hover:text-purple-300 transition-colors font-medium"
                 >
                   Masuk
@@ -365,3 +363,4 @@ export function RegisterScreen({ onRegister, onNavigateToLogin }: RegisterScreen
     </div>
   );
 }
+

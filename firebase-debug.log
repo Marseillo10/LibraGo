@@ -1,0 +1,116 @@
+[debug] [2025-11-06T12:58:43.175Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T12:58:43.183Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T12:58:43.222Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.223Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.241Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.242Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.243Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T12:58:43.243Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T12:58:43.245Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-06T12:58:43.245Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T12:58:43.250Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-06T12:58:43.250Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T12:58:43.254Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.254Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.256Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.256Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T12:58:43.256Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-06T12:58:43.256Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T12:58:43.259Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-06T12:58:43.259Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T12:58:45.652Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-06T12:58:45.665Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-06T12:58:46.217Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-06T12:58:46.217Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-06T12:58:46.398Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T12:58:46.398Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T12:58:46.401Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T12:58:46.401Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T12:58:47.707Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-06T12:58:47.708Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-06T12:58:48.495Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-06T12:58:48.495Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-06T13:16:27.663Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T13:16:27.673Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T13:16:27.729Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.729Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.741Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.741Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.742Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T13:16:27.742Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T13:16:27.743Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-06T13:16:27.744Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T13:16:27.745Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-06T13:16:27.745Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T13:16:27.747Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.747Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.748Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.748Z] Checked if tokens are valid: true, expires at: 1762437388944
+[debug] [2025-11-06T13:16:27.748Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-06T13:16:27.748Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T13:16:27.749Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-06T13:16:27.749Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T13:16:29.644Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-06T13:16:29.648Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-06T13:16:29.651Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-06T13:16:29.651Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-06T13:16:29.654Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-06T13:16:29.654Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-06T13:16:29.793Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T13:16:29.793Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T13:16:29.801Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T13:16:29.801Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T13:16:29.801Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-06T13:16:29.802Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-06T15:04:00.199Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T15:04:00.205Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T15:04:00.229Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.230Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.230Z] > refreshing access token with scopes: []
+[debug] [2025-11-06T15:04:00.240Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-06T15:04:00.242Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:00.275Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.277Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.277Z] > refreshing access token with scopes: []
+[debug] [2025-11-06T15:04:00.279Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-06T15:04:00.279Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:00.281Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T15:04:00.281Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T15:04:00.283Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.283Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.284Z] > refreshing access token with scopes: []
+[debug] [2025-11-06T15:04:00.284Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-06T15:04:00.284Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:00.288Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.288Z] Checked if tokens are valid: false, expires at: 1762437388944
+[debug] [2025-11-06T15:04:00.288Z] > refreshing access token with scopes: []
+[debug] [2025-11-06T15:04:00.288Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-06T15:04:00.288Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:02.823Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-06T15:04:02.838Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:02.908Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-06T15:04:02.908Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T15:04:02.931Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-06T15:04:02.931Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:02.968Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-06T15:04:02.968Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T15:04:03.454Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-06T15:04:03.456Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:03.472Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-06T15:04:03.473Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T15:04:04.049Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-06T15:04:04.050Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-06T15:04:04.083Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-11-06T15:04:04.083Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/librago-1010
+[debug] [2025-11-06T15:04:04.704Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T15:04:04.706Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T15:04:04.715Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-06T15:04:04.715Z] > authorizing via signed-in user (marseillosatrian@gmail.com)
+[debug] [2025-11-06T15:04:05.862Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-06T15:04:05.862Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-11-06T15:04:06.004Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-06T15:04:06.004Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-06T15:04:06.214Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-06T15:04:06.214Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-06T15:04:10.368Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-11-06T15:04:10.372Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/librago-1010/services/firebaseapphosting.googleapis.com [omitted]

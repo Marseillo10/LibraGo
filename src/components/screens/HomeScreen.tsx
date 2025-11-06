@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { PullToRefresh } from "../PullToRefresh";
 import { DashboardStats } from "../DashboardStats";
@@ -11,11 +12,10 @@ import { useAuth } from "../../context/AuthContext";
 import { fetchBooks } from "../../utils/api";
 
 interface HomeScreenProps {
-  onSelectBook: (bookId: string) => void;
   onUpgrade: () => void;
 }
 
-export function HomeScreen({ onSelectBook, onUpgrade }: HomeScreenProps) {
+export function HomeScreen({ onUpgrade }: HomeScreenProps) {
   const { currentUser } = useAuth();
   const [showSwipeTutorial, setShowSwipeTutorial] = useState(false);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
@@ -62,7 +62,7 @@ export function HomeScreen({ onSelectBook, onUpgrade }: HomeScreenProps) {
     id: "1",
     title: "Structure and Interpretation of Computer Programs",
     authors: "Harold Abelson, Gerald Jay Sussman",
-    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=300&fit=crop",
+    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=600&fit=crop&q=80",
     progress: 67,
     currentPage: 234,
     totalPages: 350,
@@ -72,7 +72,7 @@ export function HomeScreen({ onSelectBook, onUpgrade }: HomeScreenProps) {
     <PullToRefresh onRefresh={handleRefresh} className="min-h-screen">
       <div className="pb-20 lg:pb-8">
         <HeroSection onUpgrade={onUpgrade} userName={currentUser?.displayName || "User"} />
-        <ContinueReadingSection continueReading={continueReading} onSelectBook={onSelectBook} />
+        <ContinueReadingSection continueReading={continueReading} />
         <div className="bg-white dark:bg-gray-800 px-6 py-8 lg:px-12">
           <div className="max-w-6xl mx-auto">
             <div className="mb-6">
@@ -95,16 +95,15 @@ export function HomeScreen({ onSelectBook, onUpgrade }: HomeScreenProps) {
         </div>
         <TrendingBooksSection
           trendingBooks={trendingBooks}
-          onSelectBook={onSelectBook}
           showSwipeHint={showSwipeHint}
           setShowSwipeHint={setShowSwipeHint}
         />
         <RecommendationsSection
           recommendations={recommendations}
-          onSelectBook={onSelectBook}
         />
         {showSwipeTutorial && <SwipeTutorial onDismiss={handleDismissTutorial} />}
       </div>
     </PullToRefresh>
   );
 }
+

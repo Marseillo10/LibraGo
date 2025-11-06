@@ -22,6 +22,7 @@ import { db } from "../../firebase";
 import { doc, getDoc, updateDoc, arrayUnion, onSnapshot, collection, addDoc } from "firebase/firestore";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../ui/dialog";
 import { Input } from "../ui/input";
+import DOMPurify from 'dompurify';
 
 interface BookDetailScreenProps {
   onBack: () => void;
@@ -34,15 +35,33 @@ export function BookDetailScreen({ onBack, onRead, onUpgrade, bookId }: BookDeta
   const { currentUser } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
   const [book, setBook] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [collections, setCollections] = useState<any[]>([]);
   const [showAddToCollectionDialog, setShowAddToCollectionDialog] = useState(false);
   const [newCollectionName, setNewCollectionName] = useState("");
 
   useEffect(() => {
     const fetchBookData = async () => {
-      const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`);
-      const data = await response.json();
-      setBook(data);
+      if (!bookId) {
+        setError("Book ID is missing.");
+        setLoading(false);
+        return;
+      }
+      try {
+        setLoading(true);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch book data');
+        }
+        const data = await response.json();
+        setBook(data);
+      } catch (err: any) {
+        setError(err.message);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchBookData();
   }, [bookId]);
@@ -97,8 +116,16 @@ export function BookDetailScreen({ onBack, onRead, onUpgrade, bookId }: BookDeta
     }
   };
 
-  if (!book) {
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!book) {
+    return <div>Book not found.</div>;
   }
 
   const volumeInfo = book.volumeInfo;
@@ -134,7 +161,7 @@ export function BookDetailScreen({ onBack, onRead, onUpgrade, bookId }: BookDeta
             <div className="lg:col-span-1">
               <div className="aspect-[3/4] rounded-lg overflow-hidden shadow-lg mb-4">
                 <ImageWithFallback
-                  src={volumeInfo.imageLinks?.thumbnail}
+                  src={volumeInfo.imageLinks?.medium || volumeInfo.imageLinks?.large || volumeInfo.imageLinks?.thumbnail || volumeInfo.imageLinks?.smallThumbnail}
                   alt={volumeInfo.title}
                   className="w-full h-full object-cover"
                 />
@@ -238,9 +265,10 @@ export function BookDetailScreen({ onBack, onRead, onUpgrade, bookId }: BookDeta
                 </div>
 
                 <TabsContent value="description" className="mt-4">
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {volumeInfo.description}
-                  </p>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(volumeInfo.description) }}
+                    className="text-gray-700 dark:text-gray-300 leading-relaxed"
+                  />
                 </TabsContent>
 
                 <TabsContent value="details" className="mt-4">

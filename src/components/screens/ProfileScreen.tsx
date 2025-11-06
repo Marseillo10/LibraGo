@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
@@ -55,30 +56,28 @@ import { Separator } from "../ui/separator";
 import { Progress } from "../ui/progress";
 import { toast } from "sonner";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext"; // Import useTheme
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 interface ProfileScreenProps {
-  darkMode: boolean;
-  onToggleDarkMode: () => void;
   onUpgrade: () => void;
   onLogout: () => void;
   onNavigate?: (screen: string) => void;
 }
 
 export function ProfileScreen({
-  darkMode,
-  onToggleDarkMode,
   onUpgrade,
   onLogout,
   onNavigate,
 }: ProfileScreenProps) {
   const { currentUser } = useAuth();
+  const { darkMode, toggleDarkMode } = useTheme(); // Use useTheme hook
   const [language, setLanguage] = useState("id");
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showNotifDialog, setShowNotifDialog] = useState(false);
   const [showPrivacyDialog, setShowPrivacyDialog] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+
   
   // Edit Profile States
   const [name, setName] = useState(currentUser?.displayName || "");

@@ -1,27 +1,8 @@
+
 import { useState, useEffect } from "react";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
-import { LoginScreen } from "./components/screens/LoginScreen";
-import { RegisterScreen } from "./components/screens/RegisterScreen";
-import { WelcomeScreen } from "./components/screens/WelcomeScreen";
-import { GenreSelectionScreen } from "./components/screens/GenreSelectionScreen";
-import { HomeScreen } from "./components/screens/HomeScreen";
-import { SearchScreen } from "./components/screens/SearchScreen";
-import { EnhancedSearchScreen } from "./components/screens/EnhancedSearchScreen";
-import { CollectionScreen } from "./components/screens/CollectionScreen";
-import { ProfileScreen } from "./components/screens/ProfileScreen";
-import { BookDetailScreen } from "./components/screens/BookDetailScreen";
-import { ReaderScreen } from "./components/screens/ReaderScreen";
-import { EnhancedReaderScreen } from "./components/screens/EnhancedReaderScreen";
-import { SubscriptionScreen } from "./components/screens/SubscriptionScreen";
-import NotificationScreen from "./components/screens/NotificationScreen";
-import HistoryScreen from "./components/screens/HistoryScreen";
-import { ReadingGoalsScreen } from "./components/screens/ReadingGoalsScreen";
-import SettingsScreen from "./components/screens/SettingsScreen";
-import HelpScreen from "./components/screens/HelpScreen";
-import DownloadScreen from "./components/screens/DownloadScreen";
-import SupportScreen from "./components/screens/SupportScreen";
-import { CommunityScreen } from "./components/screens/CommunityScreen";
+import { Outlet, useNavigate } from "react-router-dom";
 import { BottomNav } from "./components/BottomNav";
 import { MobileMenu } from "./components/MobileMenu";
 import { DesktopSidebar } from "./components/DesktopSidebar";
@@ -30,40 +11,20 @@ import { Moon, Sun, WifiOff } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { useKeyboardShortcuts, useOnlineStatus } from "./utils/hooks";
 import { useAuth } from "./context/AuthContext";
-
-type Screen = 
-  | "login" 
-  | "register"
-  | "welcome"
-  | "genre-selection"
-  | "home" 
-  | "search" 
-  | "collection" 
-  | "profile" 
-  | "book-detail" 
-  | "reader"
-  | "subscription"
-  | "notifications"
-  | "history"
-  | "goals"
-  | "settings"
-  | "help"
-  | "downloads"
-  | "support"
-  | "community";
+import { useTheme } from "./context/ThemeContext";
+import { db } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { LoadingScreen } from "./components/screens/LoadingScreen";
 
 export default function App() {
-  const { currentUser, logout } = useAuth();
-  const [currentScreen, setCurrentScreen] = useState<Screen>("login");
-  const [showOnboarding, setShowOnboarding] = useState(true);
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const [darkMode, setDarkMode] = useState(false);
+  const { currentUser, loading } = useAuth();
+  const { darkMode, toggleDarkMode } = useTheme();
+  const navigate = useNavigate();
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
-  const [useEnhancedFeatures, setUseEnhancedFeatures] = useState(true); // Toggle for enhanced screens
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notificationCount] = useState(3); // Mock notification count
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-  
+
   const userData = {
     name: currentUser?.displayName || "User",
     email: currentUser?.email || "",
@@ -79,15 +40,6 @@ export default function App() {
   // Online status hook
   const isOnline = useOnlineStatus();
 
-  // Apply dark mode to document
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
-
   // Handle window resize for responsive design
   useEffect(() => {
     const handleResize = () => {
@@ -100,17 +52,23 @@ export default function App() {
 
   // Effect to handle screen changes based on auth state
   useEffect(() => {
-    if (currentUser) {
-      const isNewUser = currentUser.metadata.creationTime === currentUser.metadata.lastSignInTime;
-      if (isNewUser && showOnboarding) {
-        setCurrentScreen("welcome");
-      } else {
-        setCurrentScreen("home");
-      }
-    } else {
-      setCurrentScreen("login");
+    if (!loading) {
+      const checkOnboarding = async () => {
+        if (currentUser) {
+          const userDocRef = doc(db, "users", currentUser.uid);
+          const userDoc = await getDoc(userDocRef);
+          if (userDoc.exists() && !userDoc.data().hasCompletedOnboarding) {
+            navigate("/welcome");
+          } else {
+            navigate("/home");
+          }
+        } else {
+          navigate("/login");
+        }
+      };
+      checkOnboarding();
     }
-  }, [currentUser, showOnboarding]);
+  }, [currentUser, loading, navigate]);
 
 
   // Keyboard Shortcuts (enabled when logged in)
@@ -142,9 +100,7 @@ export default function App() {
           {
             key: "/",
             action: () => {
-              if (currentScreen !== "search") {
-                handleNavigate("search");
-              }
+              navigate("/search");
             },
             description: "Go to search",
           },
@@ -152,119 +108,33 @@ export default function App() {
       : []
   );
 
-  const handleLogin = () => {
-    toast.success("Berhasil masuk! Selamat datang kembali");
-  };
-
-  const handleRegister = () => {
-    setShowOnboarding(true);
-    toast.success("Akun berhasil dibuat! Selamat datang di LibraGO");
-  };
-
-  const handleWelcomeComplete = () => {
-    setCurrentScreen("genre-selection");
-  };
-
-  const handleGenreSelectionComplete = (genres: string[]) => {
-    setSelectedGenres(genres);
-    setShowOnboarding(false);
-    setCurrentScreen("home");
-    toast.success("Profil Anda sudah diatur! Selamat membaca 📚");
-  };
-
   const handleLogout = async () => {
     try {
       await logout();
       toast.info("Anda telah keluar dari LibraGO");
+      navigate("/login");
     } catch (error: any) {
       toast.error("Gagal keluar: " + error.message);
     }
   };
 
-  const handleNavigate = (page: string) => {
-    setCurrentScreen(page as Screen);
+  const handleNavigate = (path: string) => {
+    navigate(path);
   };
 
-  const handleSelectBook = (bookId: string) => {
-    console.log("Selected book:", bookId);
-    setCurrentScreen("book-detail");
-  };
-
-  const handleReadBook = () => {
-    setCurrentScreen("reader");
-  };
-
-  const handleUpgrade = () => {
-    setCurrentScreen("subscription");
-  };
-
-  const handleSubscribe = () => {
-    toast.success("Selamat! Anda sekarang adalah member Premium", {
-      description: "Nikmati akses tanpa batas ke semua konten premium",
-    });
-    setCurrentScreen("home");
-  };
-
-  const handleBack = () => {
-    if (currentScreen === "book-detail" || currentScreen === "subscription") {
-      setCurrentScreen("home");
-    } else if (currentScreen === "reader") {
-      setCurrentScreen("book-detail");
-    }
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  // Show login/register screens if not logged in
-  if (!currentUser) {
-    return (
-      <>
-        {currentScreen === "login" ? (
-          <LoginScreen
-            onLogin={handleLogin}
-            onNavigateToRegister={() => setCurrentScreen("register")}
-          />
-        ) : (
-          <RegisterScreen
-            onRegister={handleRegister}
-            onNavigateToLogin={() => setCurrentScreen("login")}
-          />
-        )}
-        <Toaster position="top-center" richColors />
-      </>
-    );
-  }
-
-  // Show onboarding for new users
-  if (showOnboarding && currentScreen === "welcome") {
-    return (
-      <>
-        <WelcomeScreen onComplete={handleWelcomeComplete} />
-        <Toaster position="top-center" richColors />
-      </>
-    );
-  }
-
-  if (showOnboarding && currentScreen === "genre-selection") {
-    return (
-      <>
-        <GenreSelectionScreen onComplete={handleGenreSelectionComplete} />
-        <Toaster position="top-center" richColors />
-      </>
-    );
+  if (loading) {
+    return <LoadingScreen />;
   }
 
   // Main app screens
   return (
     <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Desktop Sidebar - Only show on desktop for main screens */}
-      {isDesktop && ["home", "search", "collection", "profile", "notifications", "history", "goals", "settings", "help", "downloads", "support", "community"].includes(currentScreen) && (
+      {isDesktop && currentUser && (
         <DesktopSidebar
-          active={currentScreen}
+          active={"home"}
           onNavigate={handleNavigate}
-          onUpgrade={handleUpgrade}
+          onUpgrade={() => navigate("/subscription")}
           onLogout={handleLogout}
           userName={userData.name}
           userEmail={userData.email}
@@ -273,9 +143,9 @@ export default function App() {
       )}
 
       {/* Main Content */}
-      <div className={`${isDesktop && ["home", "search", "collection", "profile", "notifications", "history", "goals", "settings", "help", "downloads", "support", "community"].includes(currentScreen) ? "lg:pl-64" : ""}`}>
+      <div className={`${isDesktop && currentUser ? "lg:pl-64" : ""}`}>
         {/* Dark Mode Toggle - Desktop Only, Top Right */}
-        {isDesktop && !["reader"].includes(currentScreen) && (
+        {isDesktop && !location.pathname.includes("/read") && (
           <div className="fixed top-6 right-6 z-50">
             <Button
               variant="outline"
@@ -290,101 +160,11 @@ export default function App() {
 
         {/* Screen Content */}
         <div className={`${!isDesktop ? "max-w-md mx-auto" : ""}`}>
-          {currentScreen === "home" && (
-            <HomeScreen 
-              onSelectBook={handleSelectBook}
-              onUpgrade={handleUpgrade}
-            />
-          )}
-          
-          {currentScreen === "search" && (
-            useEnhancedFeatures ? (
-              <EnhancedSearchScreen onSelectBook={handleSelectBook} />
-            ) : (
-              <SearchScreen onSelectBook={handleSelectBook} />
-            )
-          )}
-          
-          {currentScreen === "collection" && (
-            <CollectionScreen onSelectBook={handleSelectBook} />
-          )}
-          
-          {currentScreen === "profile" && (
-            <ProfileScreen
-              darkMode={darkMode}
-              onToggleDarkMode={toggleDarkMode}
-              onUpgrade={handleUpgrade}
-              onLogout={handleLogout}
-              onNavigate={handleNavigate}
-            />
-          )}
-          
-          {currentScreen === "book-detail" && (
-            <BookDetailScreen
-              onBack={handleBack}
-              onRead={handleReadBook}
-              onUpgrade={handleUpgrade}
-            />
-          )}
-          
-          {currentScreen === "reader" && (
-            useEnhancedFeatures ? (
-              <EnhancedReaderScreen 
-                onBack={handleBack}
-                userName={userData.name}
-                userEmail={userData.email}
-              />
-            ) : (
-              <ReaderScreen 
-                onBack={handleBack}
-                userName={userData.name}
-                userEmail={userData.email}
-              />
-            )
-          )}
-          
-          {currentScreen === "subscription" && (
-            <SubscriptionScreen
-              onBack={handleBack}
-              onSubscribe={handleSubscribe}
-            />
-          )}
-
-          {currentScreen === "notifications" && (
-            <NotificationScreen />
-          )}
-
-          {currentScreen === "history" && (
-            <HistoryScreen />
-          )}
-
-          {currentScreen === "goals" && (
-            <ReadingGoalsScreen />
-          )}
-
-          {currentScreen === "settings" && (
-            <SettingsScreen />
-          )}
-
-          {currentScreen === "help" && (
-            <HelpScreen />
-          )}
-
-          {currentScreen === "downloads" && (
-            <DownloadScreen />
-          )}
-
-          {currentScreen === "support" && (
-            <SupportScreen />
-          )}
-
-          {currentScreen === "community" && (
-            <CommunityScreen />
-          )}
+          <Outlet />
         </div>
 
         {/* Mobile Menu - Available on all screens when mobile */}
-        {!isDesktop && (
+        {!isDesktop && currentUser && (
           <MobileMenu
             userName={userData.name}
             userEmail={userData.email}
@@ -392,15 +172,15 @@ export default function App() {
             open={mobileMenuOpen}
             onOpenChange={setMobileMenuOpen}
             onNavigate={handleNavigate}
-            onUpgrade={handleUpgrade}
+            onUpgrade={() => navigate("/subscription")}
             onLogout={handleLogout}
           />
         )}
 
         {/* Bottom Navigation - Only show on mobile for main screens */}
-        {!isDesktop && ["home", "search", "collection", "profile", "notifications", "history", "goals", "downloads", "community", "settings", "help", "support"].includes(currentScreen) && (
+        {!isDesktop && currentUser && (
           <BottomNav 
-            active={currentScreen} 
+            active={"home"} 
             onNavigate={handleNavigate}
             onMenuOpen={() => setMobileMenuOpen(true)}
             notificationCount={notificationCount}
@@ -416,7 +196,7 @@ export default function App() {
           onNavigate={handleNavigate}
           onToggleDarkMode={toggleDarkMode}
           darkMode={darkMode}
-          currentScreen={currentScreen}
+          currentScreen={"home"}
           recentBooks={recentBooks}
         />
       )}
@@ -433,3 +213,4 @@ export default function App() {
     </div>
   );
 }
+
