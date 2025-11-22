@@ -29,7 +29,7 @@ This project uses environment variables for configuration.
     ```bash
     cp .env.example .env
     ```
-2.  Open `.env` and update the values with your own configuration (if necessary).
+2.  Open `.env` and update the values with your own configuration (if necessary, you can skip if you want).
 
     ```env
     VITE_API_URL=https://api.librago.com
